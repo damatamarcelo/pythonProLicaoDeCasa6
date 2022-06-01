@@ -6,7 +6,7 @@ app = FastAPI()
 
 @app.get("/")
 async def root():
-    return {"Módulo 6": "Lição de casa 6"}
+    return {"mensagem": "Bemvindo a api para cálculos matemáticos simples."}
 
 
 class Operacoes(BaseModel):
@@ -15,29 +15,27 @@ class Operacoes(BaseModel):
     oper = str
 
 
-@app.post("/soma")
-async def opSoma(valor_1: int, valor_2: int, oper: str):
-    if oper == 'sm'.lower() or '+':
-        soma = (valor_1 + valor_2)
-        return soma
+@app.post("/math")
+async def math(opm: Operacoes):
+    """
+    Esta função executa uma operação matemática simples, conforme abaixo:
+    adição = +,
+    subtração = -,
+    multiplicação = x ou *,
+    divisão = % ou :,
+    """
 
-
-@app.post("/subtracao")
-async def opSubtracao(valor_1: int, valor_2: int, oper: str):
-    if oper == 'sb'.lower() or '-':
-        subtracao = (valor_1 - valor_2)
-        return subtracao
-
-
-@app.post("/multiplicacao")
-async def opMultp(valor_1: int, valor_2: int, oper: str):
-    if oper == 'mt'.lower() or '*':
-        multiplicacao = (valor_1 * valor_2)
-        return multiplicacao
-
-
-@app.post("/divisao")
-async def opDivisao(valor_1: int, valor_2: int, oper: str):
-    if oper == 'dv'.lower() or '/':
-        divisao = (valor_1 / valor_2)
-        return divisao
+    if opm.oper == "+":
+        soma = (opm.valor_1 + opm.valor_2)
+        return {"Soma": soma}
+    if opm.oper == "-":
+        subtracao = (opm.valor_1 - opm.valor_2)
+        return {"Subtração": subtracao}
+    if opm.oper == "*" or opm.oper == "x".lower():
+        multiplicacao = (opm.valor_1 + opm.valor_2)
+        return {"Multiplicação": multiplicacao}
+    if opm.oper == "%" or opm.oper == ":":
+        divisao = (opm.valor_1 - opm.valor_2)
+        return {"Divisão": divisao}
+    else:
+        return {"Mensagem": "Informe um opção válida."}
