@@ -6,7 +6,7 @@ app = FastAPI()
 
 @app.get("/")
 async def root():
-    return {"mensagem": "Bemvindo a api para cálculos matemáticos simples."}
+    return {"mensagem": "Bem vindo a api para cálculos matemáticos simples."}
 
 
 class Operacoes(BaseModel):
@@ -22,11 +22,11 @@ async def math(opm: Operacoes):
     adição = +,
     subtração = -,
     multiplicação = x ou *,
-    divisão = % ou :,
+    divisão = / ou :,
     """
 
     if opm.oper == "+":
-        soma = (opm.valor_1 + opm.valor_2)
+        soma = opm.valor_1 + opm.valor_2
         return {"Soma": soma}
     if opm.oper == "-":
         subtracao = (opm.valor_1 - opm.valor_2)
@@ -34,7 +34,7 @@ async def math(opm: Operacoes):
     if opm.oper == "*" or opm.oper == "x".lower():
         multiplicacao = (opm.valor_1 + opm.valor_2)
         return {"Multiplicação": multiplicacao}
-    if opm.oper == "%" or opm.oper == ":":
+    if opm.oper == "/" or opm.oper == ":":
         divisao = (opm.valor_1 - opm.valor_2)
         return {"Divisão": divisao}
     else:
