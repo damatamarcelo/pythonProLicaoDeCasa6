@@ -6,36 +6,36 @@ app = FastAPI()
 
 @app.get("/")
 async def root():
-    return {"mensagem": "Bem vindo a api para cálculos matemáticos simples."}
+    return {
+        "mensagem": "Bem vindo a api de operações básicas, cheque a documentação e o método POST: math!"
+    }
 
 
 class Operacoes(BaseModel):
-    valor_1 = int
-    valor_2 = int
-    oper = str
+    valor1: int
+    valor2: int
+    oper: str
 
 
 @app.post("/math")
 async def math(opm: Operacoes):
     """
-    Esta função executa uma operação matemática simples, conforme abaixo:
-    adição = +,
-    subtração = -,
-    multiplicação = x ou *,
-    divisão = / ou :,
+    Bem vindo a api que gera cálculos matemáticos simles. Acesse http://localhost:8000/docs para mais informações.
+    :param opm: Informe os valores de valor1 e valor2 como números inteiros, e '+' para soma, '-' para subtração, 'x'
+    para multiplicação, e '/' ou ':' para divisão.
+    :return: Resultados das operações matemáticas.
     """
-
     if opm.oper == "+":
-        soma = opm.valor_1 + opm.valor_2
+        soma = (opm.valor1 + opm.valor2)
         return {"Soma": soma}
     if opm.oper == "-":
-        subtracao = (opm.valor_1 - opm.valor_2)
+        subtracao = (opm.valor1 - opm.valor2)
         return {"Subtração": subtracao}
-    if opm.oper == "*" or opm.oper == "x".lower():
-        multiplicacao = (opm.valor_1 + opm.valor_2)
+    if opm.oper == "x":
+        multiplicacao = (opm.valor1 * opm.valor2)
         return {"Multiplicação": multiplicacao}
     if opm.oper == "/" or opm.oper == ":":
-        divisao = (opm.valor_1 - opm.valor_2)
+        divisao = (opm.valor1 / opm.valor2)
         return {"Divisão": divisao}
     else:
-        return {"Mensagem": "Informe um opção válida."}
+        return {"Insira um valor válido, ou acesse 'http://localhost:8000/docs' para acessar a documentação da api"}
